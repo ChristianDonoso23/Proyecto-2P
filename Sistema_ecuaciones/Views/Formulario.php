@@ -1,51 +1,63 @@
-<form method="POST" id="formulario">
-    <label>Tipo de sistema:
-        <select name="dimension" id="dimension" onchange="this.form.submit()">
-            <option value="2" <?= $dimension == '2' ? 'selected' : '' ?>>2x2</option>
-            <option value="3" <?= $dimension == '3' ? 'selected' : '' ?>>3x3</option>
+<?php $dimension = $_POST['dimension'] ?? '2'; ?>
+
+<form method="POST" class="equation-form">
+    <!-- Selector de sistema -->
+    <div class="form-group">
+        <label for="dimension" class="form-label">
+            <i class="fas fa-cog"></i> Tipo de sistema:
+        </label>
+        <select name="dimension" id="dimension" class="form-select" onchange="this.form.submit()">
+            <?php foreach ([2, 3] as $dim): ?>
+                <option value="<?= $dim ?>" <?= $dimension == $dim ? 'selected' : '' ?>>Sistema <?= $dim ?>x<?= $dim ?></option>
+            <?php endforeach; ?>
         </select>
-    </label>
+    </div>
 
-    <hr>
+    <!-- Generador de ecuaciones -->
+    <div class="equations-container">
+        <?php for ($i = 1; $i <= $dimension; $i++): ?>
+            <div class="equation-block">
+                <h3 class="equation-title">
+                    <span class="equation-number"><?= $i ?></span>
+                    Ecuación <?= $i ?>: 
+                    <span class="equation-formula">
+                        <?php if ($dimension == 2): ?>
+                            a<?= $i ?>x + b<?= $i ?>y = c<?= $i ?>
+                        <?php else: ?>
+                            a<?= $i ?>x + b<?= $i ?>y + c<?= $i ?>z = d<?= $i ?>
+                        <?php endif; ?>
+                    </span>
+                </h3>
+                <div class="coefficients-row">
+                    <?php
+                        $variables = ['a', 'b'];
+                        if ($dimension == 3) $variables[] = 'c';
+                        $variables[] = $dimension == 2 ? 'c' : 'd';
 
-    <?php if ($dimension == '2'): ?>
-        <h3>Ecuación 1: a1·x + b1·y = c1</h3>
-        <input name="a1" type="number" step="any" placeholder="a1" value="<?= $_POST['a1'] ?? '' ?>">
-        <input name="b1" type="number" step="any" placeholder="b1" value="<?= $_POST['b1'] ?? '' ?>">
-        <input name="c1" type="number" step="any" placeholder="c1" value="<?= $_POST['c1'] ?? '' ?>">
+                        $letras = ['x', 'y'];
+                        if ($dimension == 3) $letras[] = 'z';
+                        $letras[] = '=';
 
-        <h3>Ecuación 2: a2·x + b2·y = c2</h3>
-        <input name="a2" type="number" step="any" placeholder="a2" value="<?= $_POST['a2'] ?? '' ?>">
-        <input name="b2" type="number" step="any" placeholder="b2" value="<?= $_POST['b2'] ?? '' ?>">
-        <input name="c2" type="number" step="any" placeholder="c2" value="<?= $_POST['c2'] ?? '' ?>">
-
-    <?php else: ?>
-        <?php for ($i = 1; $i <= 3; $i++): ?>
-            <h3>Ecuación <?= $i ?>: a<?= $i ?>·x + b<?= $i ?>·y + c<?= $i ?>·z = d<?= $i ?></h3>
-            <?php foreach (['a','b','c','d'] as $letra): ?>
-                <input name="<?= $letra . $i ?>" type="number" step="any"
-                       placeholder="<?= $letra . $i ?>" value="<?= $_POST[$letra . $i] ?? '' ?>">
-            <?php endforeach; ?>
+                        foreach ($variables as $index => $var):
+                    ?>
+                        <div class="coefficient-group">
+                            <label class="coefficient-label"><?= $var . $i ?></label>
+                            <input name="<?= $var . $i ?>" type="number" step="any" class="coefficient-input" 
+                                   placeholder="0" value="<?= htmlspecialchars($_POST[$var . $i] ?? '') ?>">
+                        </div>
+                        <?php if ($index < count($letras)): ?>
+                            <span class="operation"><?= $letras[$index] ?><?= $index < count($letras) - 2 ? ' +' : '' ?></span>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </div>
+            </div>
         <?php endfor; ?>
-    <?php endif; ?>
+    </div>
 
-    <br><br>
-    <button type="submit">Resolver</button>
+    <!-- Botones -->
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">
+            <i class="fas fa-calculator"></i> Resolver Sistema
+        </button>
+    </div>
 </form>
-
-<?php if ($error): ?>
-    <p style="color: red;"><?= $error ?></p>
-<?php endif; ?>
-
-<?php if ($resultado): ?>
-    <h4>Resultado:</h4>
-    <?php if (is_array($resultado)): ?>
-        <ul>
-            <?php foreach ($resultado as $var => $val): ?>
-                <li><strong><?= strtoupper($var) ?>:</strong> <?= $val ?></li>
-            <?php endforeach; ?>
-        </ul>
-    <?php else: ?>
-        <p style="color: #b00;"><?= $resultado ?></p>
-    <?php endif; ?>
-<?php endif; ?>

@@ -3,49 +3,49 @@ declare(strict_types=1);
 require_once 'SistemaEcuaciones.php';
 
 class SistemaLineal3x3 extends SistemaEcuaciones {
-    private array $coeficientes;
+    private array $matriz;
 
     public function __construct(array $matriz) {
-        $this->coeficientes = $matriz; // array de 3 arrays con a, b, c, d
-    }
-
-    private function determinante(array $m): float {
-        return $m[0][0]*($m[1][1]*$m[2][2] - $m[1][2]*$m[2][1])
-             - $m[0][1]*($m[1][0]*$m[2][2] - $m[1][2]*$m[2][0])
-             + $m[0][2]*($m[1][0]*$m[2][1] - $m[1][1]*$m[2][0]);
+        $this->matriz = $matriz;
     }
 
     public function validarConsistencia(): bool {
-        $matriz = array_map(fn($row) => array_slice($row, 0, 3), $this->coeficientes);
-        return $this->determinante($matriz) != 0.0;
+        // Simple validación para evitar divisor por cero (puedes mejorar esta lógica)
+        return $this->matriz[0][0] != 0.0 || $this->matriz[1][1] != 0.0 || $this->matriz[2][2] != 0.0;
     }
 
     public function calcularResultado(): array|string {
-        $mat = $this->coeficientes;
-        $D = $this->determinante(array_map(fn($row) => array_slice($row, 0, 3), $mat));
+        $a = $this->matriz;
 
-        if ($D == 0.0) return "Sistema sin solución única.";
+        // Eliminación de Gauss
+        for ($i = 0; $i < 3; $i++) {
+            if ($a[$i][$i] == 0.0) {
+                for ($j = $i + 1; $j < 3; $j++) {
+                    if ($a[$j][$i] != 0.0) {
+                        $temp = $a[$i];
+                        $a[$i] = $a[$j];
+                        $a[$j] = $temp;
+                        break;
+                    }
+                }
+            }
 
-        $Dx = $this->determinante([
-            [$mat[0][3], $mat[0][1], $mat[0][2]],
-            [$mat[1][3], $mat[1][1], $mat[1][2]],
-            [$mat[2][3], $mat[2][1], $mat[2][2]],
-        ]);
-        $Dy = $this->determinante([
-            [$mat[0][0], $mat[0][3], $mat[0][2]],
-            [$mat[1][0], $mat[1][3], $mat[1][2]],
-            [$mat[2][0], $mat[2][3], $mat[2][2]],
-        ]);
-        $Dz = $this->determinante([
-            [$mat[0][0], $mat[0][1], $mat[0][3]],
-            [$mat[1][0], $mat[1][1], $mat[1][3]],
-            [$mat[2][0], $mat[2][1], $mat[2][3]],
-        ]);
+            for ($j = $i + 1; $j < 3; $j++) {
+                $factor = $a[$j][$i] / $a[$i][$i];
+                for ($k = $i; $k < 4; $k++) {
+                    $a[$j][$k] -= $factor * $a[$i][$k];
+                }
+            }
+        }
 
-        return [
-            'x' => round($Dx / $D, 6),
-            'y' => round($Dy / $D, 6),
-            'z' => round($Dz / $D, 6),
-        ];
+        // Sustitución regresiva
+        if ($a[2][2] == 0.0) {
+            return "Sistema sin solución única o indeterminado.";
+        }
+        $z = $a[2][3] / $a[2][2];
+        $y = ($a[1][3] - $a[1][2] * $z) / $a[1][1];
+        $x = ($a[0][3] - $a[0][2] * $z - $a[0][1] * $y) / $a[0][0];
+
+        return ['x' => round($x, 6), 'y' => round($y, 6), 'z' => round($z, 6)];
     }
 }
