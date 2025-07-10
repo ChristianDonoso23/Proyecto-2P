@@ -52,7 +52,7 @@ Proyecto-2P/
 │   ├── Controllers/
 │   │   └── Procesar.php
 │   └── index.php
-│
+│   └── styles.css
 ├── Estadisticas_Basicas/
 │   ├── Classes/
 │   │   ├── Estadistica.php
@@ -60,8 +60,7 @@ Proyecto-2P/
 │   ├── Controllers/
 │   │   └── Procesar.php
 │   └── index.php
-│
-├── style.css
+│   └── styles.css 
 └── README.md
 ```
 
