@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-require_once __DIR__ . '/controllers/procesar.php';
+require_once __DIR__ . '/Controllers/Procesar.php';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -12,7 +12,7 @@ require_once __DIR__ . '/controllers/procesar.php';
 <body>
     <div class="container">
         <h2>Calculadora de Estadísticas Básicas</h2>
-        <?php include 'Views/formulario.php'; ?>
+        <?php include 'Views/Formulario.php'; ?>
     </div>
 </body>
 </html>
