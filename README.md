@@ -79,7 +79,7 @@ Proyecto-2P/
 1. Clona o descarga este repositorio en la carpeta `htdocs` de XAMPP:
 
    ```bash
-   git clone https://github.com/tu-usuario/Proyecto-2P.git
+   git clone https://github.com/ChristianDonoso23/Proyecto-2P.git
    ```
 
 2. Abre XAMPP y enciende el servidor Apache.
@@ -95,8 +95,9 @@ Proyecto-2P/
 
 ## 🧠 Autor
 
-- Tu Nombre
-- Universidad / Materia
+- Christian Donoso
+- Universidad de las Fuerzas Armadas ESPE
+- Aplicación de tecnologías Web
 - Año: 2025
 
 ---
