@@ -5,7 +5,7 @@ Este proyecto forma parte del laboratorio de **Introducción a la Programación 
 
 ---
 
-## 🧮 Ejercicio 1: Sistema de Ecuaciones Lineales (2x2)
+## 🧮 Ejercicio 1: Sistema de Ecuaciones Lineales (2x2) y (3x3)
 
 Se resuelve un sistema de ecuaciones lineales utilizando el **método de sustitución**. Las ecuaciones se representan mediante arrays asociativos y se encapsulan en una clase orientada a objetos.
 
@@ -18,7 +18,7 @@ Se resuelve un sistema de ecuaciones lineales utilizando el **método de sustitu
 ### Uso
 
 1. Ingresa los valores de las ecuaciones en la interfaz.
-2. Se calcula automáticamente el valor de `x` y `y`.
+2. Se calcula automáticamente el valor de `x` , `y` y `z`.
 3. Se validan los datos para evitar errores algebraicos (como división por 0).
 
 ---
@@ -48,7 +48,8 @@ Proyecto-2P/
 ├── Sistema_Ecuaciones/
 │   ├── Classes/
 │   │   ├── SistemaEcuaciones.php
-│   │   └── SistemaLineal.php
+│   │   └── SistemaLineal2x2.php
+|   |   └── SistemaLineal3x3.php
 │   ├── Controllers/
 │   │   └── Procesar.php
 │   └── index.php
