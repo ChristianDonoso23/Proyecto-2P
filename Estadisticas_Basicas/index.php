@@ -10,7 +10,9 @@ require_once __DIR__ . '/controllers/procesar.php';
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h2>Calculadora de Estadísticas Básicas</h2>
-    <?php include 'views/formulario.php'; ?>
+    <div class="container">
+        <h2>Calculadora de Estadísticas Básicas</h2>
+        <?php include 'Views/formulario.php'; ?>
+    </div>
 </body>
 </html>

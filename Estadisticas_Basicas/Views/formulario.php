@@ -5,12 +5,15 @@
 </form>
 
 <?php if (!empty($resultado)): ?>
-    <h4>Resultado:</h4>
-    <ul>
-        <li><strong>Media:</strong> <?= $resultado['media'] ?></li>
-        <li><strong>Mediana:</strong> <?= $resultado['mediana'] ?></li>
-        <li><strong>Moda:</strong>
-            <?= is_array($resultado['moda']) ? implode(', ', $resultado['moda']) : 'No hay moda' ?>
-        </li>
-    </ul>
+    <div class="resultado">
+        <h4>Resultado:</h4>
+        <ul>
+            <li><strong>Media:</strong> <?= $resultado['media'] ?></li>
+            <li><strong>Mediana:</strong> <?= $resultado['mediana'] ?></li>
+            <li><strong>Moda:</strong>
+                <?= is_array($resultado['moda']) ? implode(', ', $resultado['moda']) : 'No hay moda' ?>
+            </li>
+        </ul>
+    </div>
 <?php endif; ?>
+

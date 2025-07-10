@@ -21,9 +21,20 @@ class EstadisticaBasica extends Estadistica {
 
     public function calcularModa(array $datos): array|null {
         if (count($datos) === 0) return null;
-        $frecuencias = array_count_values($datos);
+
+        $datosStr = array_map('strval', $datos);
+
+        $frecuencias = array_count_values($datosStr);
         $max = max($frecuencias);
-        $moda = array_keys(array_filter($frecuencias, fn($v) => $v === $max));
-        return count($moda) === count($frecuencias) ? null : $moda;
+        $modaStr = array_keys(array_filter($frecuencias, fn($v) => $v === $max));
+
+        if (count($modaStr) === count($frecuencias)) {
+            return null;
+        }
+
+        $moda = array_map('floatval', $modaStr);
+
+        return $moda;
     }
+
 }
