@@ -52,6 +52,8 @@ Proyecto-2P/
 |   |   └── SistemaLineal3x3.php
 │   ├── Controllers/
 │   │   └── Procesar.php
+|   ├── Views/
+│   │   └── Formulario.php
 │   └── index.php
 │   └── styles.css
 ├── Estadisticas_Basicas/
@@ -60,6 +62,8 @@ Proyecto-2P/
 │   │   └── EstadisticaBasica.php
 │   ├── Controllers/
 │   │   └── Procesar.php
+|   ├── Views/
+│   │   └── Formulario.php
 │   └── index.php
 │   └── styles.css 
 └── README.md
